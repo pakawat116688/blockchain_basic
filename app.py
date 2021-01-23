@@ -9,8 +9,9 @@ class Blockchain(object):
 
     def __init__(self):
         self.chain = []
+        self.block = {}
         self.transaction = []
-        self.new_block(previous_hash=string, proof=100)
+        self.first_block(previous_hash=string, proof=100)
 
     def new_block(self,previous_hash,proof):
         block = {
@@ -18,7 +19,20 @@ class Blockchain(object):
             'time_stamp': time(),
             'transactions': self.transaction,
             'proof': proof,
-            'previous_hash': previous_hash or self.hash(self.chain[-1]),
+            'previous_hash': self.hash(self.chain[-1]),
+        }
+        self.transaction = []
+        self.chain.append(block)
+
+        return block
+
+    def first_block(self,previous_hash,proof):
+        block = {
+            'index': len(self.chain) + 1,
+            'time_stamp': time(),
+            'transactions': self.transaction,
+            'proof': proof,
+            'previous_hash': previous_hash,
         }
         self.transaction = []
         self.chain.append(block)
@@ -32,8 +46,8 @@ class Blockchain(object):
 
     def new_transaction(self, sender, recipient, amount):
         transaction = {
-            'sender': sender,
-            'recipient':recipient,
+            'ผู้ซื้อ': sender,
+            'ผู้ขาย':recipient,
             'amount': amount
         }
         self.transaction.append(transaction)
@@ -54,8 +68,22 @@ t1 = blockchain.new_transaction("Satoshi", "Mike", "5 btc")
 t1 = blockchain.new_transaction("Mike", "Satoshi", "10 btc")
 t1 = blockchain.new_transaction("Doraemon", "Noi", "100 btc")
 prev = randint(1,10)
-#prev_str = str(prev)
-#hex_hash = hashlib.md5(prev_str.encode()).hexdigest()
-blockchain.new_block(prev,12345)
+prev_str = str(prev)
+hex_hash = hashlib.sha256(prev_str.encode()).hexdigest()
+blockchain.new_block(hex_hash,12345)
+t1 = blockchain.new_transaction("Satoshi", "Mike", "5 btc")
+t1 = blockchain.new_transaction("Mike", "Satoshi", "10 btc")
+t1 = blockchain.new_transaction("Doraemon", "Noi", "100 btc")
+prev = randint(1,10)
+prev_str = str(prev)
+hex_hash = hashlib.sha256(prev_str.encode()).hexdigest()
+blockchain.new_block(hex_hash,12345)
+t1 = blockchain.new_transaction("Satoshi", "Mike", "5 btc")
+t1 = blockchain.new_transaction("Mike", "Satoshi", "10 btc")
+t1 = blockchain.new_transaction("Doraemon", "Noi", "100 btc")
+prev = randint(1,10)
+prev_str = str(prev)
+hex_hash = hashlib.sha256(prev_str.encode()).hexdigest()
+blockchain.new_block(hex_hash,12345)
 
 print("Blockchain: ",blockchain.chain)
