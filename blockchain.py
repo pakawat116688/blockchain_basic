@@ -71,8 +71,6 @@ class Blockchain(object):
 
     # ตรวจสอบความถูกต้องว่าข้อมูลถูกแก้ไขหรือไหม
     def data_verification(self,block_number):
-        print("self.hash_value[block_number]",self.hash_value[block_number])
-        print("self.hash(self.chain[block_number])",self.hash(self.chain[block_number]))
         return self.hash(self.chain[block_number]) == self.hash_value[block_number]
 
     # แสดงข้อมูลในบล็อกนั้นออกมาให้ผู้ใช้งานเห็นข้อมูล
